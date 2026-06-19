@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS - Interactive AI Core</title>
+    <!-- Sci-Fi and Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-holo-blue">
+    <!-- Background overlay grids for futuristic sci-fi feel -->
+    <div class="grid-overlay"></div>
+    <div class="scanlines"></div>
+
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="reactor-mini">
+                    <div class="reactor-core"></div>
+                </div>
+                <div class="logo-text">
+                    <h1>JARVIS</h1>
+                    <span class="version-tag">SYSTEM CORE v4.8.2</span>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <div class="status-panel">
+                    <span class="status-indicator online"></span>
+                    <span class="status-text">SYS_STATUS: ONLINE</span>
+                </div>
+                <div class="status-panel datetime-widget">
+                    <i class="fa-regular fa-clock"></i>
+                    <span id="current-time">00:00:00 UTC</span>
+                </div>
+                <div class="status-panel hidden-mobile">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>THREAT LEVEL: MINIMAL</span>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <!-- Theme selection selector -->
+                <div class="theme-selector-container">
+                    <label for="theme-select"><i class="fa-solid fa-palette"></i></label>
+                    <select id="theme-select">
+                        <option value="theme-holo-blue">Holo Blue</option>
+                        <option value="theme-cyberpunk">Cyberpunk Neon</option>
+                        <option value="theme-matrix">Matrix Green</option>
+                        <option value="theme-dark-tech">Dark Carbon</option>
+                    </select>
+                </div>
+                <button id="sound-toggle-btn" class="icon-btn active" title="Toggle UI Sound Effects">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <div class="main-layout">
+            <!-- SIDEBAR: Controls & Settings -->
+            <aside class="sidebar" id="sidebar">
+                <button class="sidebar-toggle-in-btn" id="sidebar-close-btn">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <div class="sidebar-section">
+                    <h3><i class="fa-solid fa-sliders"></i> SPEECH CONFIG</h3>
+                    <div class="control-group">
+                        <label for="voice-select">VOICE PROFILE</label>
+                        <select id="voice-select" class="styled-input">
+                            <option value="">Detecting System Voices...</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="voice-rate">SPEED / RATE (<span id="rate-val">1.0</span>x)</label>
+                        <input type="range" id="voice-rate" min="0.5" max="2.0" step="0.1" value="1.0" class="styled-slider">
+                    </div>
+                    <div class="control-group">
+                        <label for="voice-pitch">PITCH (<span id="pitch-val">1.0</span>)</label>
+                        <input type="range" id="voice-pitch" min="0.5" max="2.0" step="0.1" value="1.0" class="styled-slider">
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3><i class="fa-solid fa-robot"></i> AI PROTOCOL</h3>
+                    <div class="api-status-card">
+                        <div class="api-status-row">
+                            <span>Gemini Engine:</span>
+                            <span id="api-status-badge" class="badge inactive">NO KEY — OFFLINE</span>
+                        </div>
+                        <div class="api-status-row" style="margin-top:6px;">
+                            <span style="font-size:10px;color:var(--text-muted);">Model:</span>
+                            <span style="font-size:10px;color:var(--primary-color);font-family:'Share Tech Mono',monospace;">gemini-2.5-flash</span>
+                        </div>
+                        <div class="control-group" style="margin-top: 10px;">
+                            <label for="api-key-input">⚙ API KEY — PASTE &amp; PRESS ENTER</label>
+                            <input type="password" id="api-key-input" class="styled-input" placeholder="Paste Google AI Studio key then press Enter...">
+                        </div>
+                        <p class="api-subtext">
+                            Get your key at <strong>aistudio.google.com</strong> → Get API Key. Paste above &amp; press Enter. Saved in browser.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="sidebar-section instructions">
+                    <h3><i class="fa-solid fa-circle-info"></i> VOICE COMMANDS</h3>
+                    <ul class="command-list">
+                        <li><strong>"Jarvis, clear chat"</strong> - Wipes screen</li>
+                        <li><strong>"Jarvis, download logs"</strong> - Saves txt log</li>
+                        <li><strong>"Jarvis, change theme to cyberpunk"</strong> - Themes UI</li>
+                        <li><strong>"Jarvis, change theme to holo"</strong> - Default UI</li>
+                        <li><strong>"Jarvis, system status"</strong> - Diagnostics check</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-footer">
+                    <button id="clear-chat-btn" class="btn btn-secondary">
+                        <i class="fa-solid fa-trash-can"></i> CLEAR CONSOLE
+                    </button>
+                    <button id="download-logs-btn" class="btn btn-primary">
+                        <i class="fa-solid fa-file-arrow-down"></i> EXPORT LOGS
+                    </button>
+                </div>
+            </aside>
+
+            <!-- CHAT CORE CONTAINER -->
+            <main class="chat-container">
+                <!-- Floating panel toggle (for mobile) -->
+                <button class="floating-toggle-btn" id="sidebar-open-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <!-- Core visual indicator (large glowing Arc Reactor) -->
+                <div class="central-core-container">
+                    <div class="arc-reactor" id="arc-reactor">
+                        <div class="ring ring-outer"></div>
+                        <div class="ring ring-middle"></div>
+                        <div class="ring ring-inner"></div>
+                        <div class="core-center">
+                            <i class="fa-solid fa-microphone" id="mic-icon-core"></i>
+                        </div>
+                    </div>
+                    <div class="core-status-text" id="core-status-text">JARVIS AI STANDBY</div>
+                </div>
+
+                <!-- Chat history display log -->
+                <div class="chat-history" id="chat-history">
+                    <div class="system-message">
+                        <div class="timestamp">[SYS_INIT 2026]</div>
+                        <div class="msg-content">Initializing neural matrices... Handshake complete. Voice synthesis ready. Jarvis Core is online.</div>
+                    </div>
+                </div>
+
+                <!-- Live audio visualizer -->
+                <div class="visualizer-container">
+                    <canvas id="audio-visualizer"></canvas>
+                </div>
+
+                <!-- Message input area -->
+                <form class="chat-input-area" id="chat-form">
+                    <button type="button" class="mic-input-btn" id="mic-btn" title="Toggle Voice Recognition (Speech-to-Text)">
+                        <i class="fa-solid fa-microphone"></i>
+                        <span class="pulse-ring"></span>
+                    </button>
+                    
+                    <input type="text" id="chat-input" placeholder="Initiate text query or click microphone..." autocomplete="off">
+                    
+                    <button type="submit" class="send-btn" id="send-btn" title="Send Message">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts link -->
+    <script src="script.js"></script>
+</body>
+</html>
